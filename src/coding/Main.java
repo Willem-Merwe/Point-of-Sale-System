@@ -26,30 +26,37 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Welcome to PoS."
 				+ "\nGives us a moment to get things started..." + "\n" + "\n");
-		setup();
-	}
-
-	private static void setup() {
 		configuration();
 		login();
 		menu();
-
 	}
 
 	private static void configuration() {
 		Properties prop = new Properties();
 		OutputStream output = null;
 		InputStream input = null;
+		userInput = new Scanner(System.in);
+		String url, username, password;
 
 		try {
 			File config = new File(configDirectory);
 			if (!config.exists()) {
 				output = new FileOutputStream(configDirectory);
-
+				
+				System.out.println("Configuration in progress, please answer the next set of questions to setup your database."
+						+ "\n"
+						+ "\nWhat is your Database's location? localhost:3306/<database name>");				
+				url = userInput.next();
+				
+				System.out.println("What is your Database username?");
+				username = userInput.next();
+				
+				System.out.println("What is your Database password?");
+				
 				// set the properties value
 				prop.setProperty("database",
-						"jdbc:mariadb://localhost:3306/project");
-				prop.setProperty("dbuser", "root");
+						"jdbc:mariadb://" + url);
+				prop.setProperty("dbuser", username);
 
 				// save properties to project folder
 				prop.store(output, null);
@@ -95,7 +102,7 @@ public class Main {
 		boolean test = false;
 		
 		while(!test){
-			System.out.println("Please insert password...");
+			System.out.println("Please enter password...");
 			input = userInput.next();
 			DatabaseManager.setPass(input);
 			test = DatabaseManager.connectDatabase();
