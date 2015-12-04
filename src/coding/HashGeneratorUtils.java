@@ -29,4 +29,13 @@ public class HashGeneratorUtils {
 	public static String generateHash(String message) {
 		return hashString(message, "SHA-256");
 	}
+	
+	public static boolean hashCompareTest(String unhashed, String hashed){
+		if (hashString(unhashed, "SHA-256").equals(hashed)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}	
 }
