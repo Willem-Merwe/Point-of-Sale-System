@@ -16,7 +16,7 @@ public class DatabaseManager {
 	private static String username;
 	private static String password;
 
-	public static boolean connectDatabase() {
+	public static void connectDatabase() {
 
 		System.out.println("Connecting to database...");
 
@@ -24,6 +24,17 @@ public class DatabaseManager {
 			conn = DriverManager.getConnection(url, username, password);
 			System.out.println("Database connected!");
 			createDB();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static boolean testDatabaseConnection() {
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+			System.out.println("Database Connected!");
+			createDB();
+			conn.close();
 			return true;
 		} catch (SQLException e) {
 			return false;
@@ -49,20 +60,19 @@ public class DatabaseManager {
 		accountsTableCreationSQL = "CREATE TABLE IF NOT EXISTS accounts ("
 				+ "userID int(5) NOT NULL AUTO_INCREMENT,"
 				+ "username varchar(250) DEFAULT NULL,"
-				+ "password varchar(250) DEFAULT NULL," + "PRIMARY KEY(userID));";
+				+ "password varchar(250) DEFAULT NULL,"
+				+ "PRIMARY KEY(userID));";
 
 		salesTableCreationSQL = "CREATE TABLE IF NOT EXISTS sales ("
 				+ "saleID int(5) NOT NULL AUTO_INCREMENT,"
-				+ "items int(5) DEFAULT NULL,"
-				+ "total DECIMAL DEFAULT NULL,"
+				+ "items int(5) DEFAULT NULL," + "total DECIMAL DEFAULT NULL,"
 				+ "PRIMARY KEY(saleID));";
-		
+
 		itemsTableCreationSQL = "CREATE TABLE IF NOT EXISTS items ("
 				+ "itemID int(5) NOT NULL AUTO_INCREMENT,"
 				+ "item varchar(250) DEFAULT NULL,"
 				+ "category varchar(250) DEFAULT NULL,"
-				+ "price DECIMAL DEFAULT NULL,"
-				+ "PRIMARY KEY(itemID));";
+				+ "price DECIMAL DEFAULT NULL," + "PRIMARY KEY(itemID));";
 
 		updateDatabase(accountsTableCreationSQL);
 		updateDatabase(salesTableCreationSQL);
