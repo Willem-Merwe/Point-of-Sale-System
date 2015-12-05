@@ -1,9 +1,5 @@
 package coding;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 /**
  * @author Willem-Merwe Joubert
  *
@@ -12,75 +8,57 @@ import java.io.InputStreamReader;
 public class AdminPanel {
 
 	public static void adminPanel() {
-		try {
-			BufferedReader userInput = new BufferedReader(
-					new InputStreamReader(System.in));
-			System.out.println("Admin Panel:" + "\n1.)Items"
-					+ "\n2.)Categories");
-			String menuSelection = userInput.readLine();
-			userInput.close();
+		System.out.println("Admin Panel:" + "\n1.)Items" + "\n2.)Categories"
+				+ "\n3.)Back");
+		String menuSelection = UserInput.stringUserInput();
 
-			switch (menuSelection) {
-			case "1":
-				itemPanel();
-				break;
-			case "2":
-				categoryPanel();
-				break;
-			default:
-				adminPanel();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		switch (menuSelection) {
+		case "1":
+			itemPanel();
+			break;
+		case "2":
+			categoryPanel();
+			break;
+		case "3":
+			Main.menu();
+		default:
+			adminPanel();
 		}
 	}
 
 	private static void itemPanel() {
-		try {
-			BufferedReader userInput = new BufferedReader(
-					new InputStreamReader(System.in));
-			System.out.println("Items Panel:" + "\n1.) Add items"
-					+ "\n2.) Edit Items" + "\n3.) Delete Items");
-			String menuSelection = userInput.readLine();
-			userInput.close();
+		System.out.println("Items Panel:" + "\n1.) Add items"
+				+ "\n2.) Edit Items" + "\n3.) Delete Items" + "\n4.) Back");
+		String menuSelection = UserInput.stringUserInput();
 
-			switch (menuSelection) {
-			case "1":
-				addItem();
-				break;
-			case "2":
-				editItem();
-				break;
-			case "3":
-				deleteItem();
-				break;
-			default:
-				adminPanel();
-				break;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		switch (menuSelection) {
+		case "1":
+			addItem();
+			break;
+		case "2":
+			editItem();
+			break;
+		case "3":
+			deleteItem();
+			break;
+		case "4":
+			adminPanel();
+		default:
+			adminPanel();
+			break;
 		}
 	}
 
 	private static void addItem() {
-		try {
-			String name, category, price;
-			BufferedReader userInput = new BufferedReader(
-					new InputStreamReader(System.in));
+		System.out.print("Item Name: ");
+		String name = UserInput.stringUserInput();
 
-			System.out.print("Item Name: ");
-			name = userInput.readLine();
+		System.out.print("Item Category: ");
+		String category = UserInput.stringUserInput();
 
-			System.out.print("Item Category");
-			category = userInput.readLine();
+		System.out.print("Item Price: ");
+		double price = Double.parseDouble(UserInput.stringUserInput());
 
-			System.out.print("Item Price");
-			price = userInput.readLine();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static void editItem() {
@@ -90,8 +68,8 @@ public class AdminPanel {
 	private static void deleteItem() {
 
 	}
-	
-	private static void categoryPanel(){
-		
+
+	private static void categoryPanel() {
+
 	}
 }
