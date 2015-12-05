@@ -15,7 +15,31 @@ public class AdminPanel {
 		try {
 			BufferedReader userInput = new BufferedReader(
 					new InputStreamReader(System.in));
-			System.out.println("Admin Panel:" + "\n1.) Add items"
+			System.out.println("Admin Panel:" + "\n1.)Items"
+					+ "\n2.)Categories");
+			String menuSelection = userInput.readLine();
+			userInput.close();
+
+			switch (menuSelection) {
+			case "1":
+				itemPanel();
+				break;
+			case "2":
+				categoryPanel();
+				break;
+			default:
+				adminPanel();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void itemPanel() {
+		try {
+			BufferedReader userInput = new BufferedReader(
+					new InputStreamReader(System.in));
+			System.out.println("Items Panel:" + "\n1.) Add items"
 					+ "\n2.) Edit Items" + "\n3.) Delete Items");
 			String menuSelection = userInput.readLine();
 			userInput.close();
@@ -65,5 +89,9 @@ public class AdminPanel {
 
 	private static void deleteItem() {
 
+	}
+	
+	private static void categoryPanel(){
+		
 	}
 }

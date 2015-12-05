@@ -16,7 +16,7 @@ public class DatabaseManager {
 	private static String username;
 	private static String password;
 
-	public static void connectDatabase() {
+	public static void connect() {
 
 		System.out.println("Connecting to database...");
 
@@ -33,7 +33,6 @@ public class DatabaseManager {
 		try {
 			conn = DriverManager.getConnection(url, username, password);
 			System.out.println("Database Connected!");
-			createDB();
 			conn.close();
 			return true;
 		} catch (SQLException e) {
