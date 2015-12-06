@@ -8,27 +8,24 @@ import java.sql.*;
  */
 
 public class DatabaseManager {
-	private static Connection conn = null;
 	private static String url;
 	private static String username;
 	private static String password;
 
-	public static void connect() {
-
-		System.out.println("Connecting to database...");
+	public static Connection connect() {
 
 		try {
-			conn = DriverManager.getConnection(url, username, password);
-			System.out.println("Database connected!");
-			createDB();
+			Connection conn = DriverManager.getConnection(url, username, password);
+			return conn;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 
 	public static boolean testDatabaseConnection() {
 		try {
-			conn = DriverManager.getConnection(url, username, password);
+			Connection conn = DriverManager.getConnection(url, username, password);
 			System.out.println("Database Connected!");
 			conn.close();
 			return true;
@@ -49,7 +46,7 @@ public class DatabaseManager {
 		password = pass;
 	}
 
-	private static void createDB() {
+	public static void createDB() {
 		System.out.println("Setting up database.");
 		String itemsTableCreationSQL, salesTableCreationSQL, sessionsTableCreationSQL, ordersTableCreationSQL;
 
@@ -82,10 +79,35 @@ public class DatabaseManager {
 		updateDatabase(ordersTableCreationSQL);
 		System.out.println("Tables running as intended." + "\n" + "\n");
 	}
-
-	public static void updateDatabase(String sql) {
+	
+	public static boolean itemExists(String item){
+		Connection conn;
+		ResultSet rs = null;
 		Statement stmt = null;
+		boolean exists = false;
+		String existsSQL = "SELECT itemName FROM items WHERE EXISTS(SELECT 1 FROM items WHERE itemName ='" + item +"');";
+		try{
+			conn = connect();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(existsSQL);
+			exists = rs.next();
+			return exists;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return exists;
+		}
+	}
+	
+	public static void insertItem(String name, double price){
+		String insertSQL = "INSERT INTO items (itemName, itemPrice) VALUES ('" + name + "', '" + price + "');";
+		updateDatabase(insertSQL);
+	}
+	
+	private static void updateDatabase(String sql) {
+		Statement stmt = null;
+		Connection conn;
 		try {
+			conn = connect();
 			stmt = conn.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {

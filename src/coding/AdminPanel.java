@@ -1,4 +1,3 @@
-
 package coding;
 
 /**
@@ -9,8 +8,7 @@ package coding;
 public class AdminPanel {
 
 	public static void adminPanel() {
-		System.out.println("Admin Panel:" + "\n1.)Items" + "\n2.)Categories"
-				+ "\n3.)Back");
+		System.out.println("Admin Panel:" + "\n1.)Items" + "\n2.)Back");
 		String menuSelection = UserInput.stringUserInput();
 
 		switch (menuSelection) {
@@ -18,9 +16,6 @@ public class AdminPanel {
 			itemPanel();
 			break;
 		case "2":
-			categoryPanel();
-			break;
-		case "3":
 			Main.menu();
 		default:
 			adminPanel();
@@ -51,26 +46,30 @@ public class AdminPanel {
 	}
 
 	private static void addItem() {
-		System.out.print("Item Name: ");
-		String name = UserInput.stringUserInput();
+		String name;
+		double price;
 
-		System.out.print("Item Category: ");
-		String category = UserInput.stringUserInput();
+		System.out.print("Item Name: ");
+		name = UserInput.stringUserInput();
 
 		System.out.print("Item Price: ");
-		double price = Double.parseDouble(UserInput.stringUserInput());
-
+		price = Double.parseDouble(UserInput.stringUserInput());
+		
+		if (DatabaseManager.itemExists(name)) {
+			System.out.println("Item already exists, please select new item name or edit row.");
+			itemPanel();
+		} else {
+			DatabaseManager.insertItem(name, price);
+			System.out.println("Item successfully added.");
+			adminPanel();
+		}
 	}
 
 	private static void editItem() {
-
+		
 	}
 
 	private static void deleteItem() {
-
-	}
-
-	private static void categoryPanel() {
 
 	}
 }
