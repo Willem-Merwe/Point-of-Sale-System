@@ -46,18 +46,16 @@ public class Configuration {
 					output = new FileOutputStream(configDirectory);
 
 					System.out
-							.println("Configuration in progress, please answer the next set of questions to setup your database."
+							.print("Configuration in progress, please answer the next set of questions to setup your database."
 									+ "\n"
 									+ "\nDatabase URL: (Default localhost:3306/<database name>)");
 					url = UserInput.stringUserInput();
 
 					System.out.print("Database Username: ");
 					username = UserInput.stringUserInput();
-					System.out.println();
 
 					System.out.print("Database password: ");
 					password = UserInput.stringUserInput();
-					System.out.println();
 
 					DatabaseManager.setUrl("jdbc:mariadb://" + url);
 					DatabaseManager.setUser(username);
@@ -77,11 +75,9 @@ public class Configuration {
 							.print("Admin Account Password for Application: ");
 					adminPassword = HashGeneratorUtils.generateHash(UserInput
 							.stringUserInput());
-					System.out.println();
 
 					System.out.print("Verify Admin Password for Application: ");
 					adminPasswordVerify = UserInput.stringUserInput();
-					System.out.println();
 
 					test = HashGeneratorUtils.hashCompareTest(
 							adminPasswordVerify, adminPassword);

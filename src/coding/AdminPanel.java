@@ -60,7 +60,6 @@ public class AdminPanel {
 			itemPanel();
 		} else {
 			DatabaseManager.insertItem(name, price);
-			System.out.println("Item successfully added.");
 			adminPanel();
 		}
 	}
