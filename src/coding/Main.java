@@ -1,6 +1,3 @@
-/**
- * Point of Sale System with integrated SQL Server.
- */
 
 package coding;
 

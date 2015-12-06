@@ -1,3 +1,4 @@
+
 package coding;
 
 public class SalesPanel {

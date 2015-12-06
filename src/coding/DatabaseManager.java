@@ -1,6 +1,3 @@
-/**
- * 
- */
 package coding;
 
 import java.sql.*;
@@ -54,28 +51,35 @@ public class DatabaseManager {
 
 	private static void createDB() {
 		System.out.println("Setting up database.");
-		String accountsTableCreationSQL, salesTableCreationSQL, itemsTableCreationSQL;
+		String itemsTableCreationSQL, salesTableCreationSQL, sessionsTableCreationSQL, ordersTableCreationSQL;
 
-		accountsTableCreationSQL = "CREATE TABLE IF NOT EXISTS accounts ("
-				+ "userID int(5) NOT NULL AUTO_INCREMENT,"
-				+ "username varchar(250) DEFAULT NULL,"
-				+ "password varchar(250) DEFAULT NULL,"
-				+ "PRIMARY KEY(userID));";
+		itemsTableCreationSQL = "CREATE TABLE IF NOT EXISTS items("
+				+ "itemID INT(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+				+ "itemName varchar(30) NOT NULL,"
+				+ "itemPrice DECIMAL(15,2) NOT NULL);";
 
 		salesTableCreationSQL = "CREATE TABLE IF NOT EXISTS sales ("
-				+ "saleID int(5) NOT NULL AUTO_INCREMENT,"
-				+ "items int(5) DEFAULT NULL," + "total DECIMAL DEFAULT NULL,"
-				+ "PRIMARY KEY(saleID));";
+				+ "saleID INT(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+				+ "sessionID INT(4) NOT NULL," 
+				+ "orderTotal DECIMAL(15,2) DEFAULT NULL,"
+				+ "timeOfSale TIME DEFAULT NULL);";
 
-		itemsTableCreationSQL = "CREATE TABLE IF NOT EXISTS items ("
-				+ "itemID int(5) NOT NULL AUTO_INCREMENT,"
-				+ "item varchar(250) DEFAULT NULL,"
-				+ "category varchar(250) DEFAULT NULL,"
-				+ "price DECIMAL DEFAULT NULL," + "PRIMARY KEY(itemID));";
+		sessionsTableCreationSQL = "CREATE TABLE IF NOT EXISTS sessions ("
+				+ "sessionID INT(4) PRIMARY KEY NOT NULL AUTO_INCREMENT," 
+				+ "sessionTimeAndDateOpened DATETIME NOT NULL,"
+				+ "sessionTimeAndDateClosed DATETIME DEFAULT NULL,"
+				+ "sessionStanding BOOLEAN NOT NULL);";
 
-		updateDatabase(accountsTableCreationSQL);
+		ordersTableCreationSQL = "CREATE TABLE IF NOT EXISTS orders ("
+				+ "orderID INT(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+				+ "saleID INT(4) NOT NULL,"
+				+ "itemID INT(4) NOT NULL," 
+				+ "itemQuantity INT NOT NULL);";
+
 		updateDatabase(salesTableCreationSQL);
 		updateDatabase(itemsTableCreationSQL);
+		updateDatabase(sessionsTableCreationSQL);
+		updateDatabase(ordersTableCreationSQL);
 		System.out.println("Tables running as intended." + "\n" + "\n");
 	}
 
